@@ -4,21 +4,39 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from "react-router-dom";
 import './Navbar.css';
 import { useNavigate } from 'react-router-dom'
-import useLocalStorage from 'react-use-localstorage';
+import { useDispatch, useSelector } from 'react-redux';
+import { TokenState } from '../../../store/tokens/TokensReducer';
+import { addToken } from '../../../store/tokens/Actions';
+import {toast} from 'react-toastify';
 
 
 function Navbar() {
-    const [token, setToken] = useLocalStorage('token');
+    const token = useSelector<TokenState, TokenState["tokens"]>(
+        (state) => state.tokens
+      );
     let navigate = useNavigate();
+    const dispatch = useDispatch();
 
     function goLogout() {
-        setToken('')
-        alert("Usuário deslogado")
+        dispatch(addToken(''));
+        toast.info('Usuário deslogado', {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            theme: "colored",
+            progress: undefined,
+        });
         navigate("/login")
     }
-    return (
-        <>
-            <Box sx={{ flexGrow: 1 }}>
+
+    var navbarComponent;
+
+    if(token !=""){
+        navbarComponent =
+        <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static">
                     <Toolbar>
                         <IconButton
@@ -79,6 +97,11 @@ function Navbar() {
                     </Toolbar>
                 </AppBar>
             </Box>
+    }
+
+    return (
+        <>
+            {navbarComponent}
         </>
     )
 }

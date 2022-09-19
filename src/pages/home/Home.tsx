@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Typography, Grid, Button, Box } from '@mui/material';
 import PostTab from "../../components/postagens/tabpostagem/TabPostagem";
 import './Home.css';
+import { Link, useNavigate } from "react-router-dom";
+import { TokenState } from "../../store/tokens/TokensReducer";
+import { useSelector } from 'react-redux';
+import { toast } from "react-toastify";
 
 function Home() {
+
+    let navigate = useNavigate();
+    const token = useSelector<TokenState, TokenState["tokens"]>(
+        (state) => state.tokens
+      );
+    
+    useEffect(() => {
+      if (token == "") {
+        toast.error('Você precisa estar logado', {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            theme: "colored",
+            progress: undefined,
+        });       
+        navigate("/login")
+  
+      }
+  }, [token])
+    
     return (
         <>
             <Grid container direction="row" justifyContent="center" alignItems="center" className="caixa">
@@ -17,7 +44,9 @@ function Home() {
                     <Box display="flex" justifyContent="center">
                         <Box marginRight={1}>
                         </Box>
-                        <Button variant="outlined" className="botao">Ver Postagens</Button>
+                        <Link to="/posts">
+                            <Button variant="outlined" className="botao">Ver Postagens</Button>
+                        </Link>
                     </Box>
 
                 </Grid>
