@@ -1,14 +1,24 @@
 import * as React from 'react';
-import { AppBar, Box, Toolbar, Typography, Button, IconButton} from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, Button, IconButton } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from "react-router-dom";
 import './Navbar.css';
+import { useNavigate } from 'react-router-dom'
+import useLocalStorage from 'react-use-localstorage';
 
 
 function Navbar() {
+    const [token, setToken] = useLocalStorage('token');
+    let navigate = useNavigate();
+
+    function goLogout() {
+        setToken('')
+        alert("Usuário deslogado")
+        navigate("/login")
+    }
     return (
         <>
-            <Box className="cursor" sx={{ flexGrow: 1 }}>
+            <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static">
                     <Toolbar>
                         <IconButton
@@ -23,7 +33,7 @@ function Navbar() {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             BlogPessoal
                         </Typography>
-                        
+
                         <Box display="flex" justifyContent="start" />
 
                         <Link to="/home" className="text-decorator-none">
@@ -34,7 +44,7 @@ function Navbar() {
                             </Box>
                         </Link>
 
-                        <Link to="/posts" className="text-decorator-none">
+                        <Link to="/api/Postagens" className="text-decorator-none">
                             <Box mx={1} className='cursor'>
                                 <Typography variant="h6" color="white">
                                     Postagens
@@ -42,7 +52,7 @@ function Navbar() {
                             </Box>
                         </Link>
 
-                        <Link to="/temas" className="text-decorator-none">
+                        <Link to="/api/Temas" className="text-decorator-none">
                             <Box mx={1} className='cursor'>
                                 <Typography variant="h6" color="white">
                                     Temas
@@ -58,13 +68,13 @@ function Navbar() {
                             </Box>
                         </Link>
 
-                        <Link to="/login" className="text-decorator-none">
-                            <Box mx={1} className='cursor'>
-                                <Typography variant="h6" color="white">
-                                    Logout
-                                </Typography>
-                            </Box>
-                        </Link>
+
+                        <Box mx={1} className='cursor' onClick={goLogout}>
+                            <Typography variant="h6" color="white">
+                                Logout
+                            </Typography>
+                        </Box>
+
 
                     </Toolbar>
                 </AppBar>

@@ -1,6 +1,6 @@
 import React, {useState, useEffect, ChangeEvent} from "react";
 import User from "../../models/User";
-import { cadastroUsuario } from "../../services/Service";
+import { cadastroUsuario } from "../../servicos/Servicos";
 import { Grid, Typography, TextField, Box, Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import "./CadastroUsuario.css"
@@ -15,7 +15,7 @@ function CadastroUsuario() {
         {
             id: 0,
             nome: "",
-            usuario: "",
+            email: "",
             senha: "",
         }
     );
@@ -24,7 +24,7 @@ function CadastroUsuario() {
         {
             id: 0,
             nome: "",
-            usuario: "",
+            email: "",
             senha: "",
         }
     );
@@ -76,7 +76,7 @@ function CadastroUsuario() {
                         >Cadastre-se
                         </Typography>
                         <TextField value={user.nome} onChange={(e:ChangeEvent<HTMLInputElement>)=> updatedModel(e)} id="nome" label="nome" variant="outlined" name="nome" margin="normal" fullWidth />
-                        <TextField value={user.usuario} onChange={(e:ChangeEvent<HTMLInputElement>)=> updatedModel(e)} id="usuario" label="usuario" variant="outlined" name="usuario" margin="normal" fullWidth />
+                        <TextField value={user.email} onChange={(e:ChangeEvent<HTMLInputElement>)=> updatedModel(e)} id="email" label="email" variant="outlined" name="usuemailario" margin="normal" fullWidth />
                         <TextField value={user.senha} onChange={(e:ChangeEvent<HTMLInputElement>)=> updatedModel(e)} id="senha" label="senha" variant="outlined" name="senha" margin="normal" type="password" fullWidth />
                         <TextField value={confirmarSenha} onChange={(e:ChangeEvent<HTMLInputElement>)=> confirmarSenhaHandle(e)} id="confirmarSenha" label="confirmarSenha" variant="outlined" name="confirmarSenha" margin="normal" fullWidth />
                         <Box marginTop={2} textAlign="center">
